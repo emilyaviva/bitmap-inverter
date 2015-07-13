@@ -1,14 +1,34 @@
-// takes a stream of bitmap data, inverts it, returns it
+'use strict';
 
-function invert(stream) {
-  var size = stream.readUInt32LE(2);
-  if (stream.readUInt32LE(10) === 54) {
-    var start = stream.readUInt32LE(10);
-    for (var i = start; i < size; i++) {
-      stream.writeUInt8(255 - stream.readUInt8(i), i);
+var fs = require('fs');
+var doInvert = require('./lib/doInvert');
+
+var inputPath;
+var outputPath;
+var invertedStream;
+
+if (process.argv.length === 4) {
+  inputPath = process.argv[2];
+  fs.readFile(inputPath, function(err, data) {
+    // make sure we have a bitmap file
+    if (err) {
+      throw new Error();
     }
-  }
-  return stream;
-}
+    if (data.toString('ascii', 0, 2) !== 'BM') {
+      throw new Error('Not a bitmap file');
+    }
 
-module.exports = invert;
+    // actually do the invert operation
+    invertedStream = doInvert(data);
+
+    outputPath = process.argv[3];
+
+    fs.writeFile(outputPath, invertedStream, function(err) {
+      if (err) throw new Error();
+    });
+
+  });
+
+} else {
+  throw new Error('Must specify an input and an output');
+}

@@ -2,16 +2,20 @@
   "name": "bitmap-inverter",
   "version": "1.0.0",
   "description": "Bitmap Inverter",
-  "main": "index.js",
+  "main": "invert.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp test"
   },
   "author": "Emily Aviva Kapor-Mater",
   "license": "MIT",
   "devDependencies": {
+    "chai": "^3.0.0",
     "gulp": "^3.9.0",
-    "gulp-mocha": "^2.1.3",
+    "gulp-jshint": "^1.11.2",
+    "gulp-mocha": "^2.1.2",
     "jshint": "^2.8.0",
-    "jshint-stylish": "^2.0.1"
-  }
+    "jshint-stylish": "^2.0.1",
+    "mocha": "^2.2.5"
+  },
+  "dependencies": {}
 }
